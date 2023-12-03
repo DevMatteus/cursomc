@@ -7,7 +7,11 @@ import java.util.List;
 import java.util.Objects;
 import java.util.Set;
 
+import org.hibernate.annotations.Fetch;
+import org.hibernate.annotations.FetchMode;
+
 import com.devmatt.cursomc.domain.enums.TipoCliente;
+import com.fasterxml.jackson.annotation.JsonManagedReference;
 
 import jakarta.persistence.CollectionTable;
 import jakarta.persistence.ElementCollection;
@@ -29,10 +33,13 @@ public class Cliente implements Serializable {
 	private String cpf_Cnpj;
 	private Integer tipo;
 	
+	@JsonManagedReference
+	@Fetch(FetchMode.JOIN)
 	@OneToMany(mappedBy = "cliente")
 	private List<Endereco> enderecos = new ArrayList<>();
 	
 	@ElementCollection
+	@Fetch(FetchMode.JOIN)
 	@CollectionTable(name = "TELEFONE")
 	private Set<String> telefones = new HashSet<>();
 	
